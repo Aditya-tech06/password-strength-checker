@@ -1,12 +1,35 @@
 import { useState } from "react";
 import { evaluatePassword, type PasswordResult } from "@/lib/passwordChecker";
-import { Eye, EyeOff, ShieldCheck } from "lucide-react";
+import { Eye, EyeOff, ShieldCheck, Shuffle, Check } from "lucide-react";
 
 const Index = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [result, setResult] = useState<PasswordResult | null>(null);
   const [submitted, setSubmitted] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const generatePassword = () => {
+    const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=";
+    let pwd = "";
+    // Guarantee at least one of each type
+    pwd += "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[Math.floor(Math.random() * 26)];
+    pwd += "abcdefghijklmnopqrstuvwxyz"[Math.floor(Math.random() * 26)];
+    pwd += "0123456789"[Math.floor(Math.random() * 10)];
+    pwd += "!@#$%^&*()_+-="[Math.floor(Math.random() * 14)];
+    for (let i = 4; i < 16; i++) {
+      pwd += chars[Math.floor(Math.random() * chars.length)];
+    }
+    // Shuffle
+    pwd = pwd.split("").sort(() => Math.random() - 0.5).join("");
+    setPassword(pwd);
+    setShowPassword(true);
+    setSubmitted(false);
+    setResult(null);
+    navigator.clipboard.writeText(pwd);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   const handleSubmit = () => {
     if (!password.trim()) return;
@@ -80,10 +103,16 @@ const Index = () => {
           </button>
         </div>
 
-        {/* Submit */}
-        <button onClick={handleSubmit} className="neon-btn w-full">
-          Analyze
-        </button>
+        {/* Buttons */}
+        <div className="flex gap-3">
+          <button onClick={handleSubmit} className="neon-btn flex-1">
+            Analyze
+          </button>
+          <button onClick={generatePassword} className="generate-btn flex items-center justify-center gap-2">
+            {copied ? <Check className="w-4 h-4" /> : <Shuffle className="w-4 h-4" />}
+            <span className="hidden sm:inline">{copied ? "Copied!" : "Generate"}</span>
+          </button>
+        </div>
 
         {/* Results */}
         {submitted && result && (
