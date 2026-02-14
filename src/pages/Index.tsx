@@ -97,11 +97,16 @@ const Index = () => {
           </button>
         </div>
 
-        {/* Generate button */}
-        <button onClick={generatePassword} className="generate-btn w-full flex items-center justify-center gap-2">
-          {copied ? <Check className="w-4 h-4" /> : <Shuffle className="w-4 h-4" />}
-          {copied ? "Copied!" : "Generate Strong Password"}
-        </button>
+        {/* Buttons */}
+        <div className="flex gap-3">
+          <button onClick={() => password.trim() && setResult(evaluatePassword(password))} className="neon-btn flex-1">
+            Analyze
+          </button>
+          <button onClick={generatePassword} className="generate-btn flex items-center justify-center gap-2">
+            {copied ? <Check className="w-4 h-4" /> : <Shuffle className="w-4 h-4" />}
+            <span className="hidden sm:inline">{copied ? "Copied!" : "Generate"}</span>
+          </button>
+        </div>
 
         {/* Results - show live as user types */}
         {result && (
