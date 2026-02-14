@@ -216,3 +216,59 @@
     linear-gradient(90deg, hsl(var(--border) / 0.3) 1px, transparent 1px);
   background-size: 60px 60px;
 }
+
+/* Signature badge */
+.signature-badge {
+  background: hsl(var(--card) / 0.9);
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 0 20px hsl(var(--neon-blue) / 0.15), 0 0 40px hsl(var(--neon-purple) / 0.08);
+  transition: box-shadow 0.4s ease;
+}
+
+.signature-badge:hover {
+  box-shadow: 0 0 30px hsl(var(--neon-blue) / 0.3), 0 0 60px hsl(var(--neon-purple) / 0.15);
+}
+
+.cyber-label {
+  color: hsl(var(--neon-blue));
+  text-shadow: 0 0 8px hsl(var(--neon-blue) / 0.5);
+  font-family: var(--font-display);
+  letter-spacing: 0.2em;
+}
+
+/* Portfolio button */
+.portfolio-btn {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: hsl(var(--neon-blue));
+  border: 1px solid hsl(var(--neon-blue) / 0.5);
+  border-radius: 999px;
+  padding: 0.4rem 1rem;
+  background: transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.portfolio-btn:hover {
+  background: hsl(var(--neon-blue) / 0.1);
+  border-color: hsl(var(--neon-blue));
+  box-shadow: 0 0 15px hsl(var(--neon-blue) / 0.3);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 640px) {
+  .signature-badge {
+    padding: 0.75rem 1rem;
+  }
+  .portfolio-btn {
+    font-size: 0.6rem;
+    padding: 0.3rem 0.8rem;
+  }
+}
