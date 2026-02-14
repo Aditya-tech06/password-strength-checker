@@ -150,10 +150,30 @@ const Index = () => {
         )}
       </div>
 
-      {/* Footer */}
-      <footer className="mt-12 text-center text-muted-foreground text-xs tracking-wide animate-fade-up" style={{ animationDelay: "0.2s" }}>
-        Built by Aditya Bedi
-      </footer>
+      {/* Floating Signature Badge */}
+      <div className="fixed bottom-6 right-6 z-50 animate-fade-up" style={{ animationDelay: "0.5s" }}>
+        <div className="signature-badge flex flex-col items-end gap-2">
+          <div className="flex flex-col items-end">
+            <span className="cyber-label text-[0.6rem] uppercase tracking-[0.2em] mb-1">
+              Cybersecurity Project
+            </span>
+            <span
+              className="text-sm font-semibold tracking-wider text-foreground"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              Aditya Bedi
+            </span>
+          </div>
+          <a
+            href="https://your-portfolio-url.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="portfolio-btn"
+          >
+            View My Portfolio
+          </a>
+        </div>
+      </div>
     </div>
   );
 };
