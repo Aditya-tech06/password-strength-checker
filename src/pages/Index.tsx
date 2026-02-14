@@ -165,7 +165,7 @@ const Index = () => {
             </span>
           </div>
           <a
-            href="https://your-portfolio-url.com"
+            href="https://adityabedi.in"
             target="_blank"
             rel="noopener noreferrer"
             className="portfolio-btn"
