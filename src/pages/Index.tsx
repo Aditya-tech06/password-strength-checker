@@ -6,7 +6,6 @@ const Index = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [result, setResult] = useState<PasswordResult | null>(null);
-  const [submitted, setSubmitted] = useState(false);
   const [copied, setCopied] = useState(false);
 
   const generatePassword = () => {
@@ -24,19 +23,19 @@ const Index = () => {
     pwd = pwd.split("").sort(() => Math.random() - 0.5).join("");
     setPassword(pwd);
     setShowPassword(true);
-    setSubmitted(false);
-    setResult(null);
+    setResult(evaluatePassword(pwd));
     navigator.clipboard.writeText(pwd);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleSubmit = () => {
-    if (!password.trim()) return;
-    // Simulates a POST request to Flask backend
-    const res = evaluatePassword(password);
-    setResult(res);
-    setSubmitted(true);
+  const handlePasswordChange = (value: string) => {
+    setPassword(value);
+    if (value.trim()) {
+      setResult(evaluatePassword(value));
+    } else {
+      setResult(null);
+    }
   };
 
   const strengthPercent = result
@@ -84,14 +83,9 @@ const Index = () => {
           <input
             type={showPassword ? "text" : "password"}
             value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-              setSubmitted(false);
-              setResult(null);
-            }}
+            onChange={(e) => handlePasswordChange(e.target.value)}
             placeholder="Enter your password..."
             className="neon-input w-full rounded-lg px-4 py-3 pr-20 text-sm"
-            onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
           />
           <button
             type="button"
@@ -103,19 +97,14 @@ const Index = () => {
           </button>
         </div>
 
-        {/* Buttons */}
-        <div className="flex gap-3">
-          <button onClick={handleSubmit} className="neon-btn flex-1">
-            Analyze
-          </button>
-          <button onClick={generatePassword} className="generate-btn flex items-center justify-center gap-2">
-            {copied ? <Check className="w-4 h-4" /> : <Shuffle className="w-4 h-4" />}
-            <span className="hidden sm:inline">{copied ? "Copied!" : "Generate"}</span>
-          </button>
-        </div>
+        {/* Generate button */}
+        <button onClick={generatePassword} className="generate-btn w-full flex items-center justify-center gap-2">
+          {copied ? <Check className="w-4 h-4" /> : <Shuffle className="w-4 h-4" />}
+          {copied ? "Copied!" : "Generate Strong Password"}
+        </button>
 
-        {/* Results */}
-        {submitted && result && (
+        {/* Results - show live as user types */}
+        {result && (
           <div className="mt-6 animate-fade-up">
             {/* Strength bar */}
             <div className="strength-bar mb-3">
